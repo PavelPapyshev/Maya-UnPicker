@@ -201,12 +201,12 @@ class UnPicker_MainWindowUI(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 				
 				#save
 				node.addAttr(nameNode, index, 
-													widgetType, 
-													widgetPos, 
-													widgetWidthHeight, 
-													widgetColor, 
-													widgetLabel, 
-													widgetScript)
+							widgetType, 
+							widgetPos, 
+							widgetWidthHeight, 
+							widgetColor, 
+							widgetLabel, 
+							widgetScript)
 				
 				index += 1
 		
