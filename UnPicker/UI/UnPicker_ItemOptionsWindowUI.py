@@ -151,10 +151,10 @@ class UnPicker_ItemOptionsWindowUI(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		for item in self.itemsData:
 			
 			btn = UnPicker_ToolBarBtnUI(width=40, 
-									height=40, 
-									RGB=item["color"], 
-									textLabel=item["label"],
-									textScript=item["script"])
+							height=40, 
+							RGB=item["color"], 
+							textLabel=item["label"],
+							textScript=item["script"])
 			
 			btn.delItem.connect(self.removeBtn)			
 			self.scrollLayout.addWidget(btn)
@@ -278,10 +278,10 @@ class UnPicker_ItemOptionsWindowUI(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		"""
 		
 		btn = UnPicker_ToolBarBtnUI(width=40, 
-									height=40, 
-									RGB=self.groupColorSel.getColor(), 
-									textLabel=self.groupLineLabel.text(),
-									textScript=self.groupScriptText.toPlainText())
+						height=40, 
+						RGB=self.groupColorSel.getColor(), 
+						textLabel=self.groupLineLabel.text(),
+						textScript=self.groupScriptText.toPlainText())
 									
 		self.scrollLayout.insertWidget(1, btn)
 		
