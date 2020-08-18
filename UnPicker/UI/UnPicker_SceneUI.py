@@ -225,12 +225,12 @@ class UnPicker_SceneUI(QtWidgets.QGraphicsScene):
 		
 		
 		gItem = ItemUI.UnPicker_ItemUI(color=data.color, 
-										textLabel=data.lable, 
-										x1=0, 
-										y1=0, 
-										x2=40, 
-										y2=20, 
-										textScript=data.script)
+							textLabel=data.lable, 
+							x1=0, 
+							y1=0, 
+							x2=40, 
+							y2=20, 
+							textScript=data.script)
 										
 		self.addItem(gItem)
 		gItem.setPos(dropX, dropY)
