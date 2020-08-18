@@ -69,22 +69,22 @@ def imageSearch(imagePath):
 
 def getImagePath():
 		
-		"""
-		returns the path to the image
-		
-		return arguments:
-			@imagePath[str]
-		"""
-		
-		imagePath = openLoadFileDialog("Open Image")
-		
-		if imagePath:
-			imagePath = imagePath[0]
-		
-		else:
-			imagePath = ""
-		
-		return imagePath
+	"""
+	returns the path to the image
+
+	return arguments:
+		@imagePath[str]
+	"""
+
+	imagePath = openLoadFileDialog("Open Image")
+
+	if imagePath:
+		imagePath = imagePath[0]
+
+	else:
+		imagePath = ""
+
+	return imagePath
 			
 	
 def openLoadFileDialog(captionDialog=""):
@@ -101,27 +101,27 @@ def openLoadFileDialog(captionDialog=""):
 	
 def getEnterRGB(rgb):
 		
-		"""
-		returns color when the cursor is over an object
-		
-		accepts arguments:
-			@rgb[list]
-		
-		return arguments:
-			@rgbNew[list]
-		"""
-		
-		rgbNew = []
-		
-		for color in rgb:
-			newColor = color + .35
-			
-			if newColor > 1:
-				newColor = color - .35
-			
-			rgbNew.append(newColor)
-		
-		return rgbNew
+	"""
+	returns color when the cursor is over an object
+
+	accepts arguments:
+		@rgb[list]
+
+	return arguments:
+		@rgbNew[list]
+	"""
+
+	rgbNew = []
+
+	for color in rgb:
+		newColor = color + .35
+
+		if newColor > 1:
+			newColor = color - .35
+
+		rgbNew.append(newColor)
+
+	return rgbNew
 		
 
 def loadItemsOptions():
