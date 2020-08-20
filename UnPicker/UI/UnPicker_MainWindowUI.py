@@ -81,7 +81,7 @@ class UnPicker_MainWindowUI(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		self.savePickerBtn.setMaximumWidth(45)
 		self.savePickerBtn.setMaximumHeight(27)
 		self.savePickerBtn.setEnabled(False)
-		self.savePickerBtn.clicked.connect(self.saveData)
+		self.savePickerBtn.clicked.connect(self.saveAllData)
 		self.toolbarLayout.addWidget(self.savePickerBtn)
 		
 		#tabsLayout----------------------------------
@@ -156,62 +156,64 @@ class UnPicker_MainWindowUI(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 					self.tabsLayout.itemAt(i).widget().removeSettingTab()
 	
 	
-	def saveData(self, saveAll=True):
+	def saveAllData(self):
+	
+		"""
+		call all schemes to be saved
+		"""
+		
+		for charCB_index in range(self.charCB.count()):
+			self.saveData(charCB_index)
+		
+		mc.inViewMessage(amg="<hl>UnPicker</hl> picker save, please save the scene", pos="botLeft", fade=True)
+		
+	
+	def saveData(self, charCB_index):
 	
 		"""
 		collects data for saving to a node
 		
 		accepts arguments:
-			@saveAll[bool] - full save or just a tab
+			@charCB_index[int] - character outline id in picker
 		"""
 		
-		charCB_count = self.charCB.count()
+		nameNode = self.charCB.itemData(charCB_index)
+		tabList = self.tabsLayout.itemAt(charCB_index).widget().getTabsWidet()
+		index = 0
 		
-		for charCB_index in range(charCB_count):
-			
-			nameNode = self.charCB.itemData(charCB_index)
-			tabList = self.tabsLayout.itemAt(charCB_index).widget().getTabsWidet()
-			index = 0
-			
-			#clearing attributes
-			node.delAttr(nameNode)
-			node.createAttrs(nameNode)
-			
-			#tabs
-			for tab in tabList:
-			
-				tabName = tab.getTabName()
-				tabColor = tab.getTabColor()
-				tabImage = tab.getTabImage()
-				dataItems = tab.getDataItems()
+		#clearing attributes
+		node.delAttr(nameNode)
+		node.createAttrs(nameNode)
+		
+		#tabs
+		for tab in tabList:
+		
+			tabName = tab.getTabName()
+			tabColor = tab.getTabColor()
+			tabImage = tab.getTabImage()
+			dataItems = tab.getDataItems()
 
-				node.addTabNameAttr(nameNode, index, tabName, tabColor, tabImage)
-				
-				if not saveAll:
-					index += 1
-					continue
-				
-				#items
-				widgetType = dataItems.getWidgetType()
-				widgetPos = dataItems.getWidgetPos()
-				widgetWidthHeight = dataItems.getWidgetWidthHeight()
-				widgetColor = dataItems.getWidgetColor()
-				widgetLabel = dataItems.getWidgetLabel()
-				widgetScript = dataItems.getWidgetScript()
-				
-				#save
-				node.addAttr(nameNode, index, 
-							widgetType, 
-							widgetPos, 
-							widgetWidthHeight, 
-							widgetColor, 
-							widgetLabel, 
-							widgetScript)
-				
-				index += 1
-		
-		mc.inViewMessage(amg="<hl>UnPicker</hl> picker save, please save the scene", pos="botLeft", fade=True)
-	
+			node.addTabNameAttr(nameNode, index, tabName, tabColor, tabImage)
+			
+			#items
+			widgetType = dataItems.getWidgetType()
+			widgetPos = dataItems.getWidgetPos()
+			widgetWidthHeight = dataItems.getWidgetWidthHeight()
+			widgetColor = dataItems.getWidgetColor()
+			widgetLabel = dataItems.getWidgetLabel()
+			widgetScript = dataItems.getWidgetScript()
+			
+			#save
+			node.addAttr(nameNode, index, 
+						widgetType, 
+						widgetPos, 
+						widgetWidthHeight, 
+						widgetColor, 
+						widgetLabel, 
+						widgetScript)
+						
+			index += 1	
+
 	
 	def checkData(self, data):
 		
@@ -292,7 +294,6 @@ class UnPicker_MainWindowUI(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 			itemData.widgetLabel = tab[7]
 			itemData.widgetScript = tab[8]
 			
-			#self.tabs.createSceneItems(tab[0], tab[2], tab[3], tab[4], tab[5], tab[6], tab[7])
 			self.tabs.createSceneItems(tab[0], itemData)
 				
 		if utility.UnPicker_EditMode:
@@ -380,7 +381,8 @@ class UnPicker_MainWindowUI(MayaQWidgetDockableMixin, QtWidgets.QDialog):
 		self.viewColor = self.colorBackroundSel.getColor()
 		
 		self.createTabsLayout(tabName, True, imagePath)
-		self.saveData(saveAll=False)
+		
+		self.saveData(self.charCB.currentIndex())
 	
 	
 	def createTabsLayout(self, tabName="Main", createTabs=True, imagePath=None):
