@@ -1,4 +1,5 @@
 import maya.cmds as mc
+import UnPicker_Utility as utility
 from PySide2 import QtWidgets, QtCore, QtGui
 from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 from UI.UnPicker_MainWindowUI import UnPicker_MainWindowUI
@@ -9,6 +10,11 @@ def UnPicker_Main():
 	"""
 	Script run
 	"""
+	
+	#default value global variables
+	utility.UnPicker_EditMode = False
+	utility.UnPicker_NameSpace = ""
+	utility.UnPicker_PressShift = False
 	
 	#if the window already exists, delete
 	if mc.workspaceControl("MainWindowUnPickerUIWorkspaceControl", exists=1):
